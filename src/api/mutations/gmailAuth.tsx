@@ -6,7 +6,7 @@ export const useGmailConnectMutation = (
 ) => {
   return useMutation({
     mutationFn: async () => {
-      const response = await apiClient.post('/gmail/authorize');
+      const response = await apiClient.get('/gmail/authorize');
       console.log(response.data)
       return response.data;
     }

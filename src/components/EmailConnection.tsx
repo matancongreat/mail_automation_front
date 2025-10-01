@@ -5,14 +5,16 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Mail, Loader2, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useGmailConnectMutation } from "@/api/mutations/gmailAuth";
 
 interface EmailConnectionProps {
   onConnect: () => void;
 }
 
-export const EmailConnection = ({ onConnect }: EmailConnectionProps) => {
+export const EmailConnection = () => {
   const [isConnecting, setIsConnecting] = useState(false);
   const { toast } = useToast();
+  const {mutate} = useGmailConnectMutation()
 
   const handleConnect = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,7 +30,7 @@ export const EmailConnection = ({ onConnect }: EmailConnectionProps) => {
         className: "relative overflow-hidden bg-card border-l-4 border-l-primary after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-1 after:w-full after:bg-gradient-to-r after:from-primary after:via-blue-500 after:to-primary after:animate-gradient-slide",
         duration: 2000,
       });
-      onConnect();
+      mutate()
     }, 2000);
   };
 

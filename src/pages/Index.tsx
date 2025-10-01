@@ -24,10 +24,6 @@ const Index = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  const handleEmailConnect = () => {
-    useGmailConnectMutation().mutate()
-  };
-
   if (!isConnected) {
     return (
       <div className="min-h-screen bg-background flex flex-col">
@@ -98,7 +94,7 @@ const Index = () => {
               </div>
 
               <div className="flex justify-center" id="email-connection">
-                <EmailConnection onConnect={handleEmailConnect} />
+                <EmailConnection />
               </div>
 
               {/* Features */}

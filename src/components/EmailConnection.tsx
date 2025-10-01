@@ -7,17 +7,15 @@ import { Mail, Loader2, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 interface EmailConnectionProps {
-  onConnect: (email: string) => void;
+  onConnect: () => void;
 }
 
 export const EmailConnection = ({ onConnect }: EmailConnectionProps) => {
-  const [email, setEmail] = useState("");
   const [isConnecting, setIsConnecting] = useState(false);
   const { toast } = useToast();
 
   const handleConnect = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email) return;
 
     setIsConnecting(true);
     
@@ -30,7 +28,7 @@ export const EmailConnection = ({ onConnect }: EmailConnectionProps) => {
         className: "relative overflow-hidden bg-card border-l-4 border-l-primary after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-1 after:w-full after:bg-gradient-to-r after:from-primary after:via-blue-500 after:to-primary after:animate-gradient-slide",
         duration: 2000,
       });
-      onConnect(email);
+      onConnect();
     }, 2000);
   };
 
@@ -50,25 +48,13 @@ export const EmailConnection = ({ onConnect }: EmailConnectionProps) => {
       <CardContent>
         <form onSubmit={handleConnect} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="email" className="text-sm font-semibold">
-              Email Address
-            </Label>
-            <Input
-              id="email"
-              type="email"
-              placeholder="your.email@example.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="h-12 rounded-lg border-0 bg-secondary/50 focus:bg-background transition-smooth"
-              required
-            />
           </div>
           <Button
             type="submit"
             variant="gradient"
             size="lg"
             className="w-full h-12"
-            disabled={isConnecting || !email}
+            disabled={isConnecting}
           >
             {isConnecting ? (
               <>

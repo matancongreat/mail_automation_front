@@ -23,12 +23,6 @@ const Index = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  const handleEmailConnect = (email: string) => {
-    setConnectedEmail(email);
-    setIsConnected(true);
-    window.scrollTo(0, 0);
-  };
-
   if (!isConnected) {
     return (
       <div className="min-h-screen bg-background flex flex-col">

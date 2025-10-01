@@ -8,9 +8,10 @@ import { useToast } from "@/hooks/use-toast";
 
 
 import type { UseMutationResult } from '@tanstack/react-query';
+import { GmailAuthResponse } from "@/types/GmailAuthResponse";
 
 interface EmailConnectionProps {
-  mutation: UseMutationResult<any, unknown, void, unknown>;
+  mutation: UseMutationResult<GmailAuthResponse, unknown, void, unknown>;
   setConnectedEmail?: (email: string) => void;
   setIsConnected?: (connected: boolean) => void;
 }
@@ -24,8 +25,7 @@ export const EmailConnection = ({mutation, setConnectedEmail, setIsConnected }: 
   useEffect(() => {
     console.log(mutation.data)
     if (mutation && mutation.data && mutation.data.authorization_url) {
-      setConsentUrl(mutation.data.authorization_url);
-      setShowConsent(true);
+      window.location.href = mutation.data.authorization_url;
       setIsConnecting(false);
     }
     // // If mutation is successful and no consentUrl, treat as connected
@@ -94,26 +94,6 @@ export const EmailConnection = ({mutation, setConnectedEmail, setIsConnected }: 
           </form>
         </CardContent>
       </Card>
-      <Dialog open={showConsent} onOpenChange={setShowConsent}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Google Authentication</DialogTitle>
-            <DialogDescription>
-              To connect your inbox, please authenticate with Google.
-            </DialogDescription>
-          </DialogHeader>
-          {consentUrl && (
-            <iframe
-              src={consentUrl}
-              title="Google Consent"
-              className="w-full h-96 border rounded mb-4"
-            />
-          )}
-          <DialogClose asChild>
-            <Button variant="outline" onClick={handleConsentClose} className="w-full mt-2">Done</Button>
-          </DialogClose>
-        </DialogContent>
-      </Dialog>
     </>
   );
 };

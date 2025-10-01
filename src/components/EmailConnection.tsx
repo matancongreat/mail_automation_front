@@ -22,13 +22,14 @@ export const EmailConnection = ({mutation, setConnectedEmail, setIsConnected }: 
   const { toast } = useToast();
 
   useEffect(() => {
-    if (mutation && mutation.data && mutation.data.consentUrl) {
-      setConsentUrl(mutation.data.consentUrl);
+    console.log(mutation.data)
+    if (mutation && mutation.data && mutation.data.authorization_url) {
+      setConsentUrl(mutation.data.authorization_url);
       setShowConsent(true);
       setIsConnecting(false);
     }
     // // If mutation is successful and no consentUrl, treat as connected
-    // if (mutation && mutation.isSuccess && mutation.data && !mutation.data.consentUrl) {
+    // if (mutation && mutation.isSuccess && mutation.data && !mutation.data.authorization_url) {
     //   if (setConnectedEmail) setConnectedEmail("user@example.com");
     //   if (setIsConnected) setIsConnected(true);
     //   setIsConnecting(false);
@@ -93,7 +94,7 @@ export const EmailConnection = ({mutation, setConnectedEmail, setIsConnected }: 
           </form>
         </CardContent>
       </Card>
-      <Dialog open={showConsent}>
+      <Dialog open={showConsent} onOpenChange={setShowConsent}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Google Authentication</DialogTitle>

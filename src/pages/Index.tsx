@@ -14,6 +14,7 @@ import companyLogo4 from "@/assets/company-logo-4.png";
 import companyLogo5 from "@/assets/company-logo-5.png";
 import companyLogo6 from "@/assets/company-logo-6.png";
 import companyLogo7 from "@/assets/company-logo-7.png";
+import { useGmailConnectMutation } from "@/api/mutations/gmailAuth";
 
 const Index = () => {
   const [connectedEmail, setConnectedEmail] = useState<string>("");
@@ -22,6 +23,10 @@ const Index = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const handleEmailConnect = () => {
+    useGmailConnectMutation().mutate()
+  };
 
   if (!isConnected) {
     return (

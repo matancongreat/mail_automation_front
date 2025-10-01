@@ -25,10 +25,10 @@ const Index = () => {
   }, []);
 
   if (!isConnected) {
+    const mutation = useGmailConnectMutation();
     return (
       <div className="min-h-screen bg-background flex flex-col">
         <DashboardHeader showLetsGoButton={true} />
-        
         {/* Hero Section */}
         <div className="relative overflow-hidden flex-1 bg-white">
           {/* Grid Pattern Background */}
@@ -42,7 +42,6 @@ const Index = () => {
               backgroundSize: '50px 50px'
             }}
           />
-          
           {/* Floating Elements */}
           <div className="absolute inset-0 pointer-events-none">
             <div className="absolute top-20 left-10 w-8 h-8 rounded-full bg-gradient-to-r from-blue-400/20 to-blue-600/20 animate-float" />
@@ -66,7 +65,6 @@ const Index = () => {
                   </p>
                 </div>
               </div>
-
               {/* Trusted By Section */}
               <div className="space-y-6">
                 <h2 className="text-lg font-semibold text-center text-muted-foreground">
@@ -92,11 +90,13 @@ const Index = () => {
                   </div>
                 </div>
               </div>
-
               <div className="flex justify-center" id="email-connection">
-                <EmailConnection />
+                <EmailConnection
+                  mutation={mutation}
+                  setConnectedEmail={setConnectedEmail}
+                  setIsConnected={setIsConnected}
+                />
               </div>
-
               {/* Features */}
               <div className="grid md:grid-cols-3 gap-6 mt-16 max-w-4xl mx-auto">
                 <Card className="border-0 bg-card/50 backdrop-blur-ios shadow-soft">

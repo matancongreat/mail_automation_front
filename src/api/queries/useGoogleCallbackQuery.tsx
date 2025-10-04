@@ -1,11 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 import { apiClient } from '@/api/client';
 
-export const useGmailCallbackQuery = (search: string) => {
+export const useGoogleCallbackQuery = (search: string) => {
   return useQuery({
-    queryKey: ['gmail-callback', search],
+    queryKey: ['google-callback', search],
     queryFn: async () => {
-      const res = await apiClient.get(`/gmail/callback${search}`);
+      const res = await apiClient.get(`/google/callback${search}`);
       return res.data;
     },
     retry: false,

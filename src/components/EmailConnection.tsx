@@ -21,20 +21,24 @@ export const EmailConnection = ({mutation, setConnectedEmail, setIsConnected }: 
   const [showConsent, setShowConsent] = useState(false);
   const [consentUrl, setConsentUrl] = useState("");
   const { toast } = useToast();
+  const [errorDialogOpen, setErrorDialogOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
-    console.log(mutation.data)
     if (mutation && mutation.data && mutation.data.authorization_url) {
       window.location.href = mutation.data.authorization_url;
       setIsConnecting(false);
     }
-    // // If mutation is successful and no consentUrl, treat as connected
-    // if (mutation && mutation.isSuccess && mutation.data && !mutation.data.authorization_url) {
-    //   if (setConnectedEmail) setConnectedEmail("user@example.com");
-    //   if (setIsConnected) setIsConnected(true);
-    //   setIsConnecting(false);
-    // }
-  }, [mutation.data, mutation.isSuccess]);
+    if (mutation.isError) {
+      let msg = "Failed to connect. Please try again.";
+      if (mutation.error && typeof mutation.error === "object" && "message" in mutation.error) {
+        msg = (mutation.error as any).message || msg;
+      }
+      setErrorMessage(msg);
+      setErrorDialogOpen(true);
+      setIsConnecting(false);
+    }
+  }, [mutation.data, mutation.isSuccess, mutation.isError, mutation.error]);
 
   const handleConnect = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -94,6 +98,17 @@ export const EmailConnection = ({mutation, setConnectedEmail, setIsConnected }: 
           </form>
         </CardContent>
       </Card>
+      <Dialog open={errorDialogOpen} onOpenChange={setErrorDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Error</DialogTitle>
+            <DialogDescription>{errorMessage}</DialogDescription>
+          </DialogHeader>
+          <DialogClose asChild>
+            <Button variant="outline">Close</Button>
+          </DialogClose>
+        </DialogContent>
+      </Dialog>
     </>
   );
 };

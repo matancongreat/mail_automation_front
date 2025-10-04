@@ -6,7 +6,7 @@ import { GmailAuthResponse } from '@/types/GmailAuthResponse.tsx';
 export const useGmailConnectMutation = () => {
   return useMutation<GmailAuthResponse>({
     mutationFn: async () => {
-      const response = await apiClient.get('/gmail/authorize');
+      const response = await apiClient.get('/google/authorize');
       return response.data;
     }
   });

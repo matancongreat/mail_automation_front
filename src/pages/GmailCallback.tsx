@@ -11,7 +11,7 @@ import {
   AlertDialogDescription,
   AlertDialogAction,
 } from "@/components/ui/alert-dialog";
-import { useGmailCallbackQuery } from "@/hooks/useGmailCallbackQuery";
+import { useGmailCallbackQuery } from "@/api/queries/useGmailCallbackQuery";
 
 
 const GmailCallback = () => {

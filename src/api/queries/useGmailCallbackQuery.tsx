@@ -5,7 +5,7 @@ export const useGmailCallbackQuery = (search: string) => {
   return useQuery({
     queryKey: ['gmail-callback', search],
     queryFn: async () => {
-      const res = await apiClient.get(`/gmail/callback${search}`);
+      const res = await apiClient.get(`/google/callback${search}`);
       return res.data;
     },
     retry: false,

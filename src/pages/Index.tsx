@@ -14,7 +14,7 @@ import companyLogo4 from "@/assets/company-logo-4.png";
 import companyLogo5 from "@/assets/company-logo-5.png";
 import companyLogo6 from "@/assets/company-logo-6.png";
 import companyLogo7 from "@/assets/company-logo-7.png";
-import { useGmailConnectMutation } from "@/api/mutations/gmailAuth";
+import { useGoogleConnectMutation } from "@/api/mutations/googleAuth";
 
 const Index = () => {
   const [connectedEmail, setConnectedEmail] = useState<string>("");
@@ -25,7 +25,7 @@ const Index = () => {
   }, []);
 
   if (!isConnected) {
-    const mutation = useGmailConnectMutation();
+    const mutation = useGoogleConnectMutation();
     return (
       <div className="min-h-screen bg-background flex flex-col">
         <DashboardHeader showLetsGoButton={true} />

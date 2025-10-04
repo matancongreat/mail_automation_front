@@ -1,7 +1,7 @@
 
 
 import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   AlertDialog,
   AlertDialogContent,
@@ -16,6 +16,7 @@ import { useGmailCallbackQuery } from "@/hooks/useGmailCallbackQuery";
 
 const GmailCallback = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const { data, error, isSuccess, isError, isLoading } = useGmailCallbackQuery(location.search);
 
@@ -37,8 +38,16 @@ const GmailCallback = () => {
     message = error?.message || "Failed to connect Gmail.";
   }
 
+  // When dialog closes, redirect to index
+  const handleDialogChange = (isOpen: boolean) => {
+    setOpen(isOpen);
+    if (!isOpen) {
+      navigate("/");
+    }
+  };
+
   return (
-    <AlertDialog open={open} onOpenChange={setOpen}>
+    <AlertDialog open={open} onOpenChange={handleDialogChange}>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>{title}</AlertDialogTitle>
